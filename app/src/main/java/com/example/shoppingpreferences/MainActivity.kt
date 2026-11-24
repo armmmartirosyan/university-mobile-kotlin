@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
         )
         listView.adapter = adapter
 
-        loadCustomers()
+        // The list is loaded in onResume(), which always runs right after onCreate().
 
         saveButton.setOnClickListener {
             // Read the fields here, at click time, to get what is typed right now.
@@ -94,6 +94,11 @@ class MainActivity : AppCompatActivity() {
             val selectedCustomer = customers[position]
 
             val intent = Intent(this, DetailsActivity::class.java)
+            // Pass the SQLite id (not position), so DetailsActivity deletes the right row.
+            intent.putExtra(
+                DetailsActivity.EXTRA_RECORD_ID,
+                selectedCustomer.id
+            )
             intent.putExtra(
                 DetailsActivity.EXTRA_CUSTOMER_NAME,
                 selectedCustomer.name
@@ -111,6 +116,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Runs on first open and also every time we come back from DetailsActivity,
+    // so a customer deleted there disappears from the list.
+    override fun onResume() {
+        super.onResume()
+        loadCustomers()
+    }
+
     private fun loadCustomers() {
         // Without clear() every reload would add the same customers again.
         customers.clear()
@@ -119,13 +131,16 @@ class MainActivity : AppCompatActivity() {
         // use { } closes the cursor at the end, even if an exception happens.
         cursor.use {
             while (it.moveToNext()) {
+                val id = it.getLong(
+                    it.getColumnIndexOrThrow(DatabaseHelper.COLUMN_ID)
+                )
                 val name = it.getString(
                     it.getColumnIndexOrThrow(DatabaseHelper.COLUMN_NAME)
                 )
                 val email = it.getString(
                     it.getColumnIndexOrThrow(DatabaseHelper.COLUMN_EMAIL)
                 )
-                customers.add(Customer(name, email))
+                customers.add(Customer(id, name, email))
             }
         }
 

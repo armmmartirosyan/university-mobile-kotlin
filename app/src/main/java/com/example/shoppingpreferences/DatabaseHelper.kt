@@ -43,9 +43,21 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(
         val db = readableDatabase
         // ORDER BY id DESC puts the newest customer at the top of the list.
         return db.rawQuery(
-            "SELECT $COLUMN_NAME, $COLUMN_EMAIL " +
+            "SELECT $COLUMN_ID, $COLUMN_NAME, $COLUMN_EMAIL " +
                 "FROM $TABLE_CUSTOMERS ORDER BY $COLUMN_ID DESC",
             null
+        )
+    }
+
+    fun deleteCustomer(id: Long): Int {
+        val db = writableDatabase
+        // Android puts the value from arrayOf(...) in place of "?",
+        // so only the row with this exact id is deleted.
+        // Returns how many rows were deleted (1, or 0 if the id was not found).
+        return db.delete(
+            TABLE_CUSTOMERS,
+            "$COLUMN_ID = ?",
+            arrayOf(id.toString())
         )
     }
 

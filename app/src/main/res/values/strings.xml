@@ -30,4 +30,7 @@
     <string name="details_title">Գնորդի տվյալներ</string>
     <string name="details_name_label">Անուն և ազգանուն՝</string>
     <string name="details_email_label">Էլ․ փոստ՝</string>
+
+    <string name="delete">Հեռացնել</string>
+    <string name="customer_deleted">Գնորդը հեռացվեց</string>
 </resources>
