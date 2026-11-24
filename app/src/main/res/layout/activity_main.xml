@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- fitsSystemWindows keeps the content below the status bar, but it does so by
+     replacing this view's own padding. That is why the padding is on the inner
+     LinearLayout and fitsSystemWindows is on this outer FrameLayout. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="@dimen/screen_padding">
 
@@ -113,5 +116,14 @@
             android:layout_marginTop="@dimen/item_spacing"
             android:text="@string/open_help" />
 
+        <!-- height 0dp + weight 1: the list takes all the space left below
+             the form. ListView scrolls by itself, so no ScrollView is needed. -->
+        <ListView
+            android:id="@+id/customersListView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/item_spacing"
+            android:layout_weight="1" />
+
     </LinearLayout>
-</ScrollView>
+</FrameLayout>

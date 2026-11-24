@@ -23,4 +23,11 @@
     <string name="email_label">էլ․ փոստ՝</string>
 
     <string name="open_help">ԲԱՑԵԼ ՕԳՆՈՒԹՅՈՒՆԸ</string>
+
+    <string name="fill_name_and_email">Լրացրեք անունը և էլ․ փոստը</string>
+    <string name="save_error">Պահպանման սխալ</string>
+
+    <string name="details_title">Գնորդի տվյալներ</string>
+    <string name="details_name_label">Անուն և ազգանուն՝</string>
+    <string name="details_email_label">Էլ․ փոստ՝</string>
 </resources>
